@@ -19,7 +19,6 @@ public class Staff_login {
         ResultSet rs=stmt.executeQuery("select * from staff where Username='"+s1+"' and Password='"+s2+"'");
         if(rs.next()) {
         	int a=rs.getInt("Staff_id");
-        	System.out.println(a);
         	return a;
         }
         else {

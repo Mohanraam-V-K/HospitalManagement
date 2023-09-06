@@ -79,13 +79,15 @@ public class adminfunctions {
         		}
         		case 3:{
         			System.out.println("general");
-        			System.out.println("pediatrician");
         			System.out.println("gynecologist");
         			System.out.println("cardiologist");
         			System.out.println("oncologist");
         			System.out.println("ent");
         			System.out.println("dermatologist");
         			System.out.println("psychiatrist");
+        			System.out.println("pulmonologist");
+        			System.out.println("nephrologist");
+        			System.out.println("ophthalmologist");
         			break;
         		}
         		case 4:{
@@ -120,7 +122,7 @@ public class adminfunctions {
         			System.out.println("Username for this doctor:-"+emailid);
         			String username=emailid;
         			String availability="available";
-        			int fees=doctorfees(specialization);
+        			float fees=doctorfees(specialization);
         			System.out.println();
         			System.out.println("Password for this doctor:-welcome@abc");
         			String password="welcome@abc";
@@ -154,7 +156,7 @@ public class adminfunctions {
             			String address=sc.nextLine();
             			System.out.println("Qualification");
             			String qualification=sc.nextLine();
-            			System.out.println("Specialization:-");
+            			System.out.println("Staff type:-");
             			String specialization=sc.nextLine();
             			System.out.println("Registration Date(YYYY-MM-DD)format:-");
             			String registrationdate=sc.nextLine();
@@ -171,7 +173,7 @@ public class adminfunctions {
             				Class.forName("com.mysql.cj.jdbc.Driver");
                 	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
                 	        Statement stmt=con.createStatement();
-                	        String sql="insert into staff(Firstname,Lastname,Age,Gender,EmailID,Address,Qualification,Specialization,RegistrationDate,YearsOfExperience,Username,Password,availability) values (\""+firstname+"\",\""+lastname+"\","+age+",\""+gender+"\",\""+emailid+"\",\""+address+"\",\""+qualification+"\",\""+specialization+"\",\""+registrationdate+"\","+yearsofexperience+",\""+username+"\",\""+password+"\",\""+availability+"\");";
+                	        String sql="insert into staff(Firstname,Lastname,Age,Gender,EmailID,Address,Qualification,Type,RegistrationDate,YearsOfExperience,Username,Password,availability) values (\""+firstname+"\",\""+lastname+"\","+age+",\""+gender+"\",\""+emailid+"\",\""+address+"\",\""+qualification+"\",\""+specialization+"\",\""+registrationdate+"\","+yearsofexperience+",\""+username+"\",\""+password+"\",\""+availability+"\");";
                 	        stmt.executeUpdate(sql);
                 	        System.out.println("Details of the staff added successfully");
                 	        con.close();
@@ -246,7 +248,7 @@ public class adminfunctions {
         	        	System.out.println("EmailID:-"+rs.getString("EmailID"));
         	        	System.out.println("Username:-"+rs.getString("Username"));
         	        	System.out.println("Availability:-"+rs.getString("availability"));
-        	        	System.out.println("Fees:-"+rs.getString("fees"));
+        	        	System.out.println("Fees:-"+rs.getFloat("fees"));
         	        	System.out.println("\n\n\n");
         	        	}
         	        con.close();
@@ -372,9 +374,10 @@ public class adminfunctions {
             	        	System.out.println("AppoinmentID:-"+rs.getInt("AppoinmentID"));
             	        	System.out.println("Doctor Username:-"+rs.getString("DoctorUsername"));
             	        	System.out.println("Doctor Specialization:-"+rs.getString("DoctorSpecialization"));
-            	        	System.out.println("PatientUsername:-"+rs.getInt("PatientUsername"));
+            	        	System.out.println("Patient Username:-"+rs.getString("PatientUsername"));
             	        	System.out.println("Patient Type:-"+rs.getString("PatientType"));
-            	        	System.out.println("Fees:-"+rs.getInt("Fees"));
+            	        	System.out.println("Fees:-"+rs.getFloat("Fees"));
+            	        	System.out.println("Appoinment Date:-"+rs.getString("appoinmentdate"));
             	        	System.out.println("\n\n\n");
             	        	}
             	        con.close();

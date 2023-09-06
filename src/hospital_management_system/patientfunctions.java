@@ -5,9 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.time.LocalDate;
 public class patientfunctions {
 	private Scanner sc;
 	int stat=0;
+	int rat=1;
+	float rating=0;
 	public int patient_functions(int status){
         sc = new Scanner(System.in);
         do {
@@ -15,9 +18,10 @@ public class patientfunctions {
         	System.out.println("1)View Profile");
         	System.out.println("2)Change Password");
         	System.out.println("3)Book appoinments");
-        	System.out.println("4)Fees");
-        	System.out.println("5)View Previous appoinments");
-        	System.out.println("6)Logout");
+        	System.out.println("4)View Current doctor details");
+        	System.out.println("5)Fees");
+        	System.out.println("6)View Previous appoinments");
+        	System.out.println("7)Logout");
         	System.out.println("Enter your choice:-");
         	int option=sc.nextInt();
         	sc.nextLine();
@@ -109,11 +113,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"general");
             	        pstmt.setString(2, "admitted");
             	        pstmt.setString(3, "out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -130,11 +135,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"gynecologist");
             	        pstmt.setString(2, "admitted");
             	        pstmt.setString(3, "out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -151,11 +157,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"cardiologist");
             	        pstmt.setString(2, "admitted");
             	        pstmt.setString(3, "out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -172,11 +179,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"oncologist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -193,11 +201,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"ent");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -214,11 +223,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"dermatologist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -235,11 +245,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"psychiatrist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -256,11 +267,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"pulmonologist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -277,11 +289,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"nephrologist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -298,11 +311,12 @@ public class patientfunctions {
             	        Statement stmt=con.createStatement();
             	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
             	        if(rs.next()) {
-            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=? where Patient_id=?");
+            	        pstmt=con.prepareStatement("update Patient set TypeOfDoctorNeeded=?,Status=?,PatientType=?,FeesPaid=? where Patient_id=?");
             	        pstmt.setString(1,"ophthalmologist");
             	        pstmt.setString(2,"admitted");
             	        pstmt.setString(3,"out");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5,status);
             	        pstmt.executeUpdate();
             	        }
             	        con.close();
@@ -315,21 +329,52 @@ public class patientfunctions {
         			System.out.println("Wrong Option");
         			break;
         		}
-        		System.out.println("Appoinment made. Please wait for the doctor to confirm");
+        		System.out.println("Appoinment made on "+LocalDate.now()+". Please wait for the doctor to confirm");
+        		System.out.println("You will receive the details of the appoinment through mail when the doctor has confirmed your appoinment ");
         		}
         		break;
         	}
         	case 4:{
-        		int fees=0;
+        		int docid=0;
         		try {
         			Class.forName("com.mysql.cj.jdbc.Driver");
         	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
-        	        String sql="select FeesToBePaid from patient where Patient_id=?";
+        	        Statement stmt=con.createStatement();
+        	        ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+status);
+        	        if(rs.next()) {
+        	        	docid=rs.getInt("AttendingDoctorID");
+        	        }
+        	        ResultSet rs1=stmt.executeQuery("select * from doctor where Doctor_id="+docid);
+        	        if(rs1.next()) {
+        	        	System.out.println("The details of current doctor as follows:-");
+        	        	System.out.println("Name:-"+rs1.getString("Firstname")+" "+rs1.getString("Lastname"));
+        	        	System.out.println("EmailID:-"+rs1.getString("EmailID"));
+        	        	System.out.println("Age:-"+rs1.getInt("Age"));
+        	        	System.out.println("Experience:- "+rs.getString("YearsOfExperience")+" years of expreince in "+rs.getString("Specialization")+" department");
+        	        }
+        	        else {
+        	        	System.out.println("You have been scheduled for discharge");
+        	        }
+        	        con.close();
+        		}
+        		catch(Exception e) {
+        			System.out.println("Your appoinment hasn't been confirmed yet");
+        		}
+        		break;
+        	}
+        	case 5:{
+        		float fees=0;
+        		String statusofpat=null;
+        		try {
+        			Class.forName("com.mysql.cj.jdbc.Driver");
+        	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
+        	        String sql="select * from patient where Patient_id=?";
         	        PreparedStatement statement = con.prepareStatement(sql);
         	        statement.setInt(1,status);
         	        ResultSet rs=statement.executeQuery();
         	        if(rs.next()) {
-        	        	fees=rs.getInt("FeesToBePaid");
+        	        	fees=rs.getFloat("FeesToBePaid");
+        	        	statusofpat=rs.getString("Status");
         	        }
         		con.close();
         		}
@@ -337,7 +382,10 @@ public class patientfunctions {
         			System.out.println(e);
         		}
         		if(fees==0) {
-        			System.out.println("You are not not discharged");
+        			System.out.println("You are not discharged");
+        		}
+        		else if(fees!=0 && statusofpat.equals("treated")) {
+        			System.out.println("You are not discharged");
         		}
         		else {
         		System.out.println("Fees to be paid="+fees);
@@ -348,14 +396,26 @@ public class patientfunctions {
         			try {
         				Class.forName("com.mysql.cj.jdbc.Driver");
             	        Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
-            	        PreparedStatement pstmt	;
-            	        pstmt=con1.prepareStatement("update patient set FeesPaid=?,FeesToBePaid=?,Status=? where Patient_id=?");
-            	        pstmt.setInt(1,fees);
-            	        pstmt.setInt(2,0);
+            	        PreparedStatement pstmt,pstmt1;
+            	        pstmt=con1.prepareStatement("update patient set FeesPaid=?,FeesToBePaid=?,Status=?,NumberOfDays=?,AdmittedRoomID=? where Patient_id=?");
+            	        pstmt.setFloat(1,fees);
+            	        pstmt.setFloat(2,0);
             	        pstmt.setString(3,"discharged");
-            	        pstmt.setInt(4,status);
+            	        pstmt.setInt(4, 0);
+            	        pstmt.setInt(5, 0);
+            	        pstmt.setInt(6,status);
             	        pstmt.executeUpdate();
+            	        pstmt1=con1.prepareStatement("update room set Availability=?,StayingPatientID=?,PatientUsername=?,NumberOfDays=? where StayingPatientID=?");
+            	        pstmt1.setString(1, "available");
+            	        pstmt1.setInt(2, 0);
+            	        pstmt1.setString(3, null);
+            	        pstmt1.setInt(4, 0);
+            	        pstmt1.setInt(5, status);
+            	        pstmt1.executeUpdate();
             	        System.out.println("Payment successful");
+            	        System.out.println("Please leave a rating for our hospital");
+            	        rating=sc.nextFloat();
+            	        sc.nextLine();
             	        stat=0;
             	        con1.close();
         			}
@@ -366,13 +426,54 @@ public class patientfunctions {
         		else {
         			System.out.println("Wrong option");
         		}
+        		try {
+        			float avg=0;
+        			Class.forName("com.mysql.cj.jdbc.Driver");
+        	        Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
+        	        Statement stmt=con1.createStatement();
+        	        PreparedStatement pstmt;
+        	        ResultSet rs=stmt.executeQuery("select * from Hospital");
+        	        if(rs.next()) {
+        	        	float oldrating=rs.getFloat("Rating");
+        	        	avg=(rating+oldrating)/rat;
+        	        	System.out.println(avg);
+        	        	rat++;
+        	        }
+        	        
+        	        pstmt=con1.prepareStatement("update Hospital set Rating=?");
+        	        pstmt.setFloat(1, avg);
+        	        System.out.println("Thanks for your feedback");
+        	        con1.close();
+        		}
+        		catch(Exception e) {
+        			System.out.println(e);
+        		}
         		}
         		break;
         	}
-        	case 5:{
+        	case 6:{
+        		try{
+        			Class.forName("com.mysql.cj.jdbc.Driver");
+        	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
+        	        String sql="select * from appoinment where PatientID="+status;
+        	        PreparedStatement statement = con.prepareStatement(sql);
+        	        ResultSet rs=statement.executeQuery();
+        	        while(rs.next()){
+        	        	System.out.println("AppoinmentID:-"+rs.getInt("AppoinmentID"));
+        	        	System.out.println("Doctor Username:-"+rs.getString("DoctorUsername"));
+        	        	System.out.println("Doctor Specialization:-"+rs.getString("DoctorSpecialization"));
+        	        	System.out.println("Fees:-"+rs.getFloat("Fees"));
+        	        	System.out.println("Appoinment Date:-"+rs.getString("appoinmentdate"));
+        	        	System.out.println("\n\n\n");
+        	        	}
+        	        con.close();
+        			}
+        			catch(Exception e){
+        				System.out.println("No such appoinment has been made");
+        			}
         		break;
         	}
-        	case 6:{
+        	case 7:{
         		System.out.println("----------------Logged Out SuccessFully-------------------\n\n");
         		return -1;
         	}
