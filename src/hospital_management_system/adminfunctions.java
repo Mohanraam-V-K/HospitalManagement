@@ -1,9 +1,5 @@
 package hospital_management_system;
 import java.sql.*;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Scanner;
 public class adminfunctions {
 	private Scanner sc;
@@ -18,6 +14,7 @@ public class adminfunctions {
 		else if(specialization.equals("pulmonologist")) return 250;
 		else if(specialization.equals("nephrologist")) return 250;
 		else if(specialization.equals("ophthalmologist")) return 200;
+		else if(specialization.equals("dentist")) return 250;
 		return 0;
 	}
 	public int admin_functions(){
@@ -26,12 +23,13 @@ public class adminfunctions {
         	System.out.println("----------Admin Menu-----------");
         	System.out.println("1)View Profile");
         	System.out.println("2)Change Password");
-        	System.out.println("3)Types of specialization in the hospital");
+        	System.out.println("3)Specialization Types");
         	System.out.println("4)Add a new User");
         	System.out.println("5)View User Details");
-        	System.out.println("6)View Details of Rooms");
-        	System.out.println("7)View Previous Appoinments");
-        	System.out.println("8)Logout");
+        	System.out.println("6)Rooms History");
+        	System.out.println("7)Appointments History");
+        	System.out.println("8)Change Hospital contact info");
+        	System.out.println("9)Logout");
         	System.out.println("Enter your choice:-");
         	int option=sc.nextInt();
         	sc.nextLine();
@@ -78,16 +76,18 @@ public class adminfunctions {
         			break;
         		}
         		case 3:{
+        			System.out.println("Department in out hospital are as follows:-");
         			System.out.println("general");
         			System.out.println("gynecologist");
-        			System.out.println("cardiologist");
-        			System.out.println("oncologist");
-        			System.out.println("ent");
-        			System.out.println("dermatologist");
+        			System.out.println("cardiologist (heart specialist)");
+        			System.out.println("oncologist (cancer specialist)");
+        			System.out.println("ent (Ear Nose Tounge)");
+        			System.out.println("dermatologist (skin specialist)");
         			System.out.println("psychiatrist");
-        			System.out.println("pulmonologist");
-        			System.out.println("nephrologist");
-        			System.out.println("ophthalmologist");
+        			System.out.println("pulmonologist (lung specialist)");
+        			System.out.println("nephrologist (kidney specialist)");
+        			System.out.println("ophthalmologist (eye specialist)");
+        			System.out.println("dentist");
         			break;
         		}
         		case 4:{
@@ -371,23 +371,68 @@ public class adminfunctions {
             	        PreparedStatement statement = con.prepareStatement(sql);
             	        ResultSet rs=statement.executeQuery();
             	        while(rs.next()){
-            	        	System.out.println("AppoinmentID:-"+rs.getInt("AppoinmentID"));
+            	        	System.out.println("AppointmentID:-"+rs.getInt("AppoinmentID"));
             	        	System.out.println("Doctor Username:-"+rs.getString("DoctorUsername"));
             	        	System.out.println("Doctor Specialization:-"+rs.getString("DoctorSpecialization"));
             	        	System.out.println("Patient Username:-"+rs.getString("PatientUsername"));
             	        	System.out.println("Patient Type:-"+rs.getString("PatientType"));
             	        	System.out.println("Fees:-"+rs.getFloat("Fees"));
             	        	System.out.println("Appoinment Date:-"+rs.getString("appoinmentdate"));
+            	        	System.out.println("Number of days: "+rs.getInt("numberofdays"));
             	        	System.out.println("\n\n\n");
             	        	}
             	        con.close();
             			}
             			catch(Exception e){
-            				System.out.println("No such appoinment has been made");
+            				System.out.println("No such appointment has been made");
             			}
         			break;
         		}
         		case 8:{
+        			System.out.println("1)Change Hospital MailID");
+        			System.out.println("2)Change Hospital contact number");
+        			int choice=sc.nextInt();
+        			sc.nextLine();
+        			if(choice==1) {
+        				System.out.println("Enter new EMailID for hospital:");
+        				String mail=sc.nextLine();
+        				try {
+        					Class.forName("com.mysql.cj.jdbc.Driver");
+                	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
+                	        PreparedStatement pstmt;
+                	        pstmt=con.prepareStatement("update Hospital set Email=?");
+                	        pstmt.setString(1, mail);
+                	        pstmt.executeUpdate();
+                	        System.out.println("EMail changed successfully");
+                	        con.close();
+        				}
+        				catch(Exception e) {
+        					System.out.println(e);
+        				}
+        			}
+        			else if(choice==2) {
+        				System.out.println("Enter new Landline number for hospital:");
+        				String landline=sc.nextLine();
+        				try {
+        					Class.forName("com.mysql.cj.jdbc.Driver");
+                	        Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
+                	        PreparedStatement pstmt;
+                	        pstmt=con.prepareStatement("update Hospital set LandLine=?");
+                	        pstmt.setString(1, landline);
+                	        System.out.println("LandLine number changed successfully");
+                	        pstmt.executeUpdate();
+                	        con.close();
+        				}
+        				catch(Exception e) {
+        					System.out.println(e);
+        				}
+        			}
+        			else {
+        				System.out.println("Wrong option");
+        			}
+        			break;
+        		}
+        		case 9:{
         			return -1;
         		}
         	}

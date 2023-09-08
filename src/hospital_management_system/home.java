@@ -84,11 +84,13 @@ public class home {
         	        Statement stmt=con.createStatement();
         	        ResultSet rs=stmt.executeQuery("select * from Hospital");
         	        if(rs.next()) {
+        	        	System.out.println("\n\n\n");
         	        	System.out.println("Hospital name: "+rs.getString("Name"));
         	        	System.out.println("Address of the hospital: "+rs.getString("Address"));
         	        	System.out.println("Landline number: "+rs.getString("LandLine"));
-        	        	System.out.println("Rating : "+rs.getFloat("Rating"));
+        	        	System.out.println("Rating(out of 5): "+rs.getFloat("Rating"));
         	        	System.out.println("About the hospital: "+rs.getString("Description"));
+        	        	System.out.println("\n\n\n\n");
         	        }
         	        con.close();
 				}

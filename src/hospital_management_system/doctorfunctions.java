@@ -19,10 +19,10 @@ public class doctorfunctions {
         	System.out.println("----------Doctor Menu-----------");
         	System.out.println("1)View Profile");
         	System.out.println("2)Change Password");
-        	System.out.println("3)Confirm appoinments and precheckup");
+        	System.out.println("3)Confirm appointments and precheckup");
         	System.out.println("4)View current patient details");
         	System.out.println("5)Current patient treatment");
-        	System.out.println("6)View Previous appoinments");
+        	System.out.println("6)Appointment history");
         	System.out.println("7)Logout");
         	System.out.println("Enter your choice:-");
         	int option=sc.nextInt();
@@ -129,6 +129,7 @@ public class doctorfunctions {
                 	        break;
         	        	}
         	        }
+        	        con.close();
         		}
         		catch(Exception e) {
         			System.out.println(e);
@@ -169,8 +170,8 @@ public class doctorfunctions {
             	        System.out.println(" In room id:-"+roomno);
             	        pstmt2.setInt(2,patid);
             	        pstmt2.executeUpdate();
-            	        System.out.println("Scheduled Appoinment date  "+LocalDate.now()+" and time  "+LocalTime.now().plusHours(2));
-            	        System.out.println("The scheduled appoinment details have been mailed to the patient");
+            	        System.out.println("Scheduled Appointment date  "+LocalDate.now()+" and time  "+LocalTime.now().plusHours(2));
+            	        System.out.println("The scheduled appointment details have been mailed to the patient");
             	        con1.close();
             	        c=0;
             	        check=1;
@@ -181,6 +182,7 @@ public class doctorfunctions {
     	        		}
     	        	}
     	        }
+    	        con.close();
         		}
         		catch(Exception e) {
         			System.out.println(e);
@@ -209,13 +211,13 @@ public class doctorfunctions {
         		}
         		}
         		else {
-        			System.out.println("You didnt confirm the appoinment of any patient");
+        			System.out.println("You didnt confirm the appointment of any patient");
         		}
         		break;
         	}
         	case 5:{
         		if(check==1) {
-        		System.out.println("After pre checkup");
+        		System.out.println("After checkup");
         		System.out.println("1)Discharge");
         		System.out.println("2)Further treatment");
         		System.out.println("3)Transfer to other doctor");
@@ -249,6 +251,7 @@ public class doctorfunctions {
             		catch(Exception e) {
             				System.out.println(e);
             		}
+            		int nod=0;
             		try {
                 		Class.forName("com.mysql.cj.jdbc.Driver");
                 	    Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");	
@@ -259,6 +262,7 @@ public class doctorfunctions {
             	        while(rs1.next()) {
             	        	if(rs1.getString("Availability").equals("notavailable")) {
             	        		totalfees+=rs1.getInt("NumberOfDays")*10*specfees;
+            	        		nod=rs1.getInt("NumberOfDays");
             	        		try {
             	        		Class.forName("com.mysql.cj.jdbc.Driver");
                     	        Connection con1=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
@@ -348,14 +352,14 @@ public class doctorfunctions {
                     	        Statement stmt=con.createStatement(); 
                     	        int sta=status;
                     	        LocalDate date=LocalDate.now();
-                    	        String s="insert into appoinment(DoctorID,DoctorUsername,DoctorSpecialization,PatientID,PatientUsername,PatientType,Fees,appoinmentdate) values ("+sta+",\""+doctusername+"\",\""+spec+"\","+patid+",\""+patusername+"\",\""+pattype+"\","+totalfees+",\""+date+"\");";
+                    	        String s="insert into appoinment(DoctorID,DoctorUsername,DoctorSpecialization,PatientID,PatientUsername,PatientType,Fees,appoinmentdate,numberofdays) values ("+sta+",\""+doctusername+"\",\""+spec+"\","+patid+",\""+patusername+"\",\""+pattype+"\","+totalfees+",\""+date+"\","+nod+");";
                     	        stmt.executeUpdate(s);
                     	        pstmt2=con1.prepareStatement("update patient set PatientType=? where Patient_id=?");
                     	        pstmt2.setString(1,"out");
                     	        pstmt2.setInt(2, patid);
                     	        pstmt2.executeUpdate();
                     	        con1.close();
-                    	        System.out.println("Patient "+rs.getString("Firstname")+" has been prepared and ready for discharge");
+                    	        System.out.println("Patient "+rs.getString("Firstname")+" has been prepped for discharge");
                     	        check=0;
             	        		}
             	        		catch(Exception e) {
@@ -394,6 +398,7 @@ public class doctorfunctions {
         			catch(Exception e) {
         				System.out.println(e);
         			}
+        			check=1;
         			System.out.println("Treatment requirements");
         			System.out.println("1)Requires doctor's expertise the whole time");
         			System.out.println("2)Doesn't require doctor's expertise the whole time");
@@ -492,7 +497,7 @@ public class doctorfunctions {
 	    	        		PreparedStatement pstmt,pstmt1,pstmt2;
 	    	        		Statement stmt=con.createStatement(); 
 	    	        		LocalDate date=LocalDate.now();
-                	        String s="insert into appoinment(DoctorID,DoctorUsername,DoctorSpecialization,PatientID,PatientUsername,PatientType,Fees,appoinmentdate) values ("+status+",\""+doctusername+"\",\""+spec+"\","+patid+",\""+patusername+"\",\""+pattype+"\","+totalfees+",\""+date+"\");";
+                	        String s="insert into appoinment(DoctorID,DoctorUsername,DoctorSpecialization,PatientID,PatientUsername,PatientType,Fees,appoinmentdate,numberofdays) values ("+status+",\""+doctusername+"\",\""+spec+"\","+patid+",\""+patusername+"\",\""+pattype+"\","+totalfees+",\""+date+"\","+nod+");";
                 	        stmt.executeUpdate(s);
                 	        pstmt=con.prepareStatement("update doctor set availability=?,currentpatientid=?,roomid=?,staffid=? where Doctor_id=?");
 	    	        		pstmt.setString(1,"available");
@@ -517,6 +522,7 @@ public class doctorfunctions {
 	    	        		pstmt2.setInt(5, roomno);
 	    	        		pstmt2.executeUpdate();
 	    	        		System.out.println("The patient has been assigned to duty staff");
+        				con.close();
         				}
         				catch(Exception e) {
         					System.out.println(e);
@@ -569,7 +575,7 @@ public class doctorfunctions {
         		}
         		}
         		else {
-        			System.out.println("You didnt confirm the appoinment of any patient");
+        			System.out.println("You didnt confirm the appointment of any patient");
         		}
         		break;
         	}
@@ -581,18 +587,18 @@ public class doctorfunctions {
         	        PreparedStatement statement = con.prepareStatement(sql);
         	        ResultSet rs=statement.executeQuery();
         	        while(rs.next()){
-        	        	System.out.println("AppoinmentID:-"+rs.getInt("AppoinmentID"));
+        	        	System.out.println("AppointmentID:-"+rs.getInt("AppoinmentID"));
         	        	System.out.println("PatientID:-"+rs.getInt("PatientID"));
         	        	System.out.println("Patient Username:-"+rs.getString("PatientUsername"));
         	        	System.out.println("Patient type:-"+rs.getString("PatientType"));
         	        	System.out.println("Fees:-"+rs.getFloat("Fees"));
-        	        	System.out.println("Appoinment Date:-"+rs.getString("appoinmentdate"));
+        	        	System.out.println("Appointment Date:-"+rs.getString("appoinmentdate"));
         	        	System.out.println("\n\n\n");
         	        	}
         	        con.close();
         			}
         			catch(Exception e){
-        				System.out.println("No such appoinment has been made");
+        				System.out.println("No such appointment has been made");
         			}
         		break;
         	}

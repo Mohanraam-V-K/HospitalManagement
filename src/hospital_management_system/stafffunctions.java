@@ -32,12 +32,14 @@ public class stafffunctions {
 	        				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
 	        				Statement stmt=con.createStatement();
 	        				ResultSet rs=stmt.executeQuery("select * from staff where Staff_id="+status);
-	        				con.close();
 	        				if(rs.next()) {
+	        					System.out.println("\n\n");
 	        					System.out.println("Username:-"+rs.getString("Username"));
 	        					System.out.println("Password:-"+rs.getString("Password"));
 	        					System.out.println("RegistrationDate: "+rs.getDate("RegistrationDate"));
+	        					System.out.println("\n\n");
 	        				}
+	        				con.close();
 	        			}
 	        			catch(Exception e) {
 	        				System.out.println("Invalid");
@@ -139,12 +141,14 @@ public class stafffunctions {
 	        				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
 	        				Statement stmt=con.createStatement();
 	        				ResultSet rs=stmt.executeQuery("select * from staff where Staff_id="+status);
-	        				con.close();
 	        				if(rs.next()) {
+	        					System.out.println("\n\n");
 	        					System.out.println("Username:-"+rs.getString("Username"));
 	        					System.out.println("Password:-"+rs.getString("Password"));
 	        					System.out.println("RegistrationDate: "+rs.getDate("RegistrationDate"));
+	        					System.out.println("\n\n");
 	        				}
+	        				con.close();
 	        			}
 	        			catch(Exception e) {
 	        				System.out.println("Invalid");
@@ -165,9 +169,9 @@ public class stafffunctions {
 	        					pstmt.setString(1,pwd);
 	        					pstmt.setInt(2,status);
 	        					pstmt.executeUpdate();
-	        					pstmt.close();
 	        					System.out.println("Password updated");
 	        				}
+	        				con.close();
 	        			}
 	        			catch(Exception e) {
 	        				System.out.println(e);
@@ -180,14 +184,14 @@ public class stafffunctions {
 	        				Class.forName("com.mysql.cj.jdbc.Driver");
 	        				Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/hospital","root","root");
 	        				Statement stmt=con.createStatement();
-	        				ResultSet rs=stmt.executeQuery("select * from staff where Staff_id=?"+status);
+	        				ResultSet rs=stmt.executeQuery("select * from staff where Staff_id="+status);
 	        				if(rs.next()) {
 	        					staffusername=rs.getString("Username");
 	        				}
 	        				con.close();
 	        			}
 	        			catch(Exception e) {
-	        				
+	        				System.out.println(e);
 	        			}
 	        			try {
 	        				Class.forName("com.mysql.cj.jdbc.Driver");
@@ -235,11 +239,13 @@ public class stafffunctions {
 	            	        Statement stmt=con.createStatement();
 	            	        ResultSet rs=stmt.executeQuery("select * from patient where AttendingStaffID="+status);
 	            	        if(rs.next()) {
+	            	        	System.out.println("\n\n");
 	            	        	System.out.println("Name:-"+rs.getString("Firstname")+" "+rs.getString("Lastname"));
 	            	        	System.out.println("EmailID:-"+rs.getString("EmailID"));
 	            	        	System.out.println("Age:-"+rs.getInt("Age"));
 	            	        	System.out.println("Gender:-"+rs.getString("Gender"));
 	            	        	System.out.println("BloodGroup:-"+rs.getString("BloodGroup"));
+	            	        	System.out.println("\n\n");
 	            	        }
 	            	        con.close();
 	            		}
@@ -256,12 +262,13 @@ public class stafffunctions {
 	        				Statement stmt=con.createStatement();
 	        				ResultSet rs=stmt.executeQuery("select * from patient where Patient_id="+patid);
 	        				while(rs.next()) {
-	        					pstmt=con.prepareStatement("update patient set AttendingStaffID=?,PatientType=?,Status=?,NumberOfDays=? where Patient_id=?");
+	        					pstmt=con.prepareStatement("update patient set AttendingStaffID=?,PatientType=?,Status=?,NumberOfDays=?,TypeOfDoctorNeeded=? where Patient_id=?");
 	        					pstmt.setInt(1, 0);
 	        					pstmt.setString(2, "out");
 	        					pstmt.setString(3, "confirmed");
 	        					pstmt.setInt(4, 0);
-	        					pstmt.setInt(5, patid);
+	        					pstmt.setString(5, null);
+	        					pstmt.setInt(6, patid);
 	        					pstmt.executeUpdate();
 	        					pstmt1=con.prepareStatement("update room set StayingPatientID=?,PatientUsername=?,StaffID=?,StaffUsername=?,NumberOfDays=?,Availability=? where Roomid=?");
 	        					pstmt1.setInt(1, 0);
@@ -278,7 +285,7 @@ public class stafffunctions {
 	        					pstmt2.setInt(3, 0);
 	        					pstmt2.setInt(4, status);
 	        					pstmt2.executeUpdate();
-	        					System.out.println("Patient is prepared to go home");
+	        					System.out.println("Patient has been prepped for discharge");
 	        				}
 	        				con.close();
 	        				}
@@ -292,8 +299,7 @@ public class stafffunctions {
 	        			return -1;
 	        		}
 	        		}
-	        	}while(true);
-	        	
+	        	}while(true);        	
 	        }
         }
 	        con0.close();
